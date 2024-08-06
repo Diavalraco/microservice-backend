@@ -6,21 +6,7 @@ class PostController {
     try {
       const posts = await prisma.post.findMany({});
 
-      //   * Method 1
-      //   let postWithUsers = await Promise.all(
-      //     posts.map(async (post) => {
-      //       const res = await axios.get(
-      //         `${process.env.AUTH_MICRO_URL}/api/getUser/${post.user_id}`
-      //       );
-      //       console.log("the user res", res.data);
-      //       return {
-      //         ...post,
-      //         ...res.data,
-      //       };
-      //     })
-      //   );
 
-      // * Method 2
       let userIds = [];
       posts.forEach((item) => {
         userIds.push(item.user_id);
@@ -36,18 +22,6 @@ class PostController {
       response.data.users.forEach((item) => {
         users[item.id] = item;
       });
-
-      //   let postWithUsers = await Promise.all(
-      //     posts.map((post) => {
-      //       const user = response.data.users.find((item) => item.id === post.user_id);
-      //       return {
-      //         ...post,
-      //         user,
-      //       };
-      //     })
-      //   );
-
-      //   * Method 3
       let postWithUsers = await Promise.all(
         posts.map((post) => {
           const user = users[post.user_id];
@@ -86,3 +60,38 @@ class PostController {
 }
 
 export default PostController;
+
+
+
+
+
+
+
+   //   let postWithUsers = await Promise.all(
+      //     posts.map((post) => {
+      //       const user = response.data.users.find((item) => item.id === post.user_id);
+      //       return {
+      //         ...post,
+      //         user,
+      //       };
+      //     })
+      //   );
+
+      //   * Method 3
+
+
+            //   * Method 1
+      //   let postWithUsers = await Promise.all(
+      //     posts.map(async (post) => {
+      //       const res = await axios.get(
+      //         `${process.env.AUTH_MICRO_URL}/api/getUser/${post.user_id}`
+      //       );
+      //       console.log("the user res", res.data);
+      //       return {
+      //         ...post,
+      //         ...res.data,
+      //       };
+      //     })
+      //   );
+
+      // * Method 2
